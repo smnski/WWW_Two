@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liczenie Kalorii</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container py-4">
+    <!-- Nagłówek -->
+    <header class="row mb-4">
+      <div class="col-12 text-center">
+        <h1 class="text-primary">Kalkulator Kalorii</h1>
+        <p>Zarządzaj swoimi posiłkami i śledź spożyte kalorie!</p>
+      </div>
+    </header>
+
+    <!-- Całkowite kalorie -->
+    <section class="row mb-4">
+      <div class="col-md-6 offset-md-3">
+        <div class="card">
+          <div class="card-body text-center">
+            <h2 class="card-title text-success">Całkowite kalorie</h2>
+            <p class="card-text display-4"><%= totalCalories %> kcal</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lista potraw -->
+    <section class="row mb-4">
+      <div class="col-md-8 offset-md-2">
+        <h3 class="text-secondary">Lista potraw</h3>
+        <ul class="list-group">
+          <% if (foods.length > 0) { %>
+            <% foods.forEach(food => { %>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <strong><%= food.name %></strong>
+                  <span class="text-muted">- <%= food.calories %> kcal</span>
+                </div>
+                <div>
+                  <a href="/edit/<%= food._id %>" class="btn btn-sm btn-warning">Edytuj</a>
+                  <a href="/delete/<%= food._id %>" class="btn btn-sm btn-danger">Usuń</a>
+                </div>
+              </li>
+            <% }); %>
+          <% } else { %>
+            <li class="list-group-item text-center text-muted">Brak potraw do wyświetlenia.</li>
+          <% } %>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Przyciski akcji -->
+    <section class="row text-center">
+      <div class="col-12">
+        <a href="/add" class="btn btn-primary btn-lg">Dodaj nową potrawę</a>
+      </div>
+    </section>
+  </div>
+
+  <!-- Bootstrap JS (opcjonalne) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
