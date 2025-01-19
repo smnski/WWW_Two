@@ -1,6 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const Food = require('../models/Food'); // Model MongoDB dla potraw
+const foodController = require('../controllers/foodController'); // Import kontrolera
+
+router.get('/', foodController.getFoods); // Strona główna
+router.get('/add', foodController.renderAddForm); // Formularz dodawania
+router.post('/add', foodController.addFood); // Dodawanie potrawy
+router.get('/edit/:id', foodController.renderEditForm); // Formularz edycji
+router.post('/edit/:id', foodController.editFood); // Edycja potrawy
+router.get('/delete/:id', foodController.deleteFood); // Usuwanie potrawy
 
 // Trasa główna - wyświetlenie strony głównej z listą potraw i całkowitymi kaloriami
 router.get('/', async (req, res) => {

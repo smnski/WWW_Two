@@ -15,4 +15,4 @@ const foodSchema = new mongoose.Schema({
 });
 
 // Eksport modelu opartego na schemacie
-module.exports = mongoose.model('Food', foodSchema);
+module.exports = mongoose.models.Food || mongoose.model('Food', foodSchema);
