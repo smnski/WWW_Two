@@ -1,0 +1,4 @@
+exports.renderDashboard = (req, res) => {
+    res.render('dashboard', { title: 'Dashboard' });
+  };
+  
