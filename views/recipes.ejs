@@ -8,27 +8,40 @@
   <link href="/css/recipesStyles.css" rel="stylesheet">
 </head>
 
-<body>
-  <h1>Recipes</h1>
+<body class="bg-light">
+  <div class="container py-4">
+    <h1 class="text-center mb-4">Recipes</h1>
 
-  <a href="/recipes/add">
-    <button>Add New Recipe</button>
-  </a>
+    <div class="d-flex justify-content-center mb-4">
+      <a href="/recipes/add" class="me-3">
+        <button class="btn btn-primary">Add New Recipe</button>
+      </a>
+      <a href="/recipes/filter">
+        <button class="btn btn-secondary">Filter Recipes</button>
+      </a>
+    </div>
 
-  <div class="scrollable-container">
-    <% if (recipes.length > 0) { %>
-      <% recipes.forEach(recipe => { %>
-        <div class="recipe-card">
-          <h4><%= recipe.name %></h4>
-          <p>Calories: <%= recipe.calories %></p>
-          <p>Protein: <%= recipe.protein %>g</p>
-          <p>Carbohydrates: <%= recipe.carbohydrates %>g</p>
-          <p>Fats: <%= recipe.fats %>g</p>
+    <div class="row g-4">
+      <% if (recipes.length > 0) { %>
+        <% recipes.forEach(recipe => { %>
+          <div class="col-md-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title"><%= recipe.name %></h5>
+                <p class="card-text">Calories: <%= recipe.calories %></p>
+                <p class="card-text">Protein: <%= recipe.protein %>g</p>
+                <p class="card-text">Carbohydrates: <%= recipe.carbohydrates %>g</p>
+                <p class="card-text">Fats: <%= recipe.fats %>g</p>
+              </div>
+            </div>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <div class="col-12">
+          <p class="text-center">No recipes found!</p>
         </div>
-      <% }); %>
-    <% } else { %>
-      <p>No recipes found!</p>
-    <% } %>
+      <% } %>
+    </div>
   </div>
 </body>
 </html>
