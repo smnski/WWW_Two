@@ -24,8 +24,9 @@
     <div class="row g-4">
       <% if (recipes.length > 0) { %>
         <% recipes.forEach(recipe => { %>
-          <div class="col-md-4">
-            <div class="card">
+          <div class="col-md-4" id="recipe-<%= recipe.id %>">
+            <div class="card card-container">
+              <button class="delete-btn" onclick="deleteRecipe('<%= recipe.id %>')">&times;</button>
               <div class="card-body">
                 <h5 class="card-title"><%= recipe.name %></h5>
                 <p class="card-text">Calories: <%= recipe.calories %></p>
@@ -43,5 +44,7 @@
       <% } %>
     </div>
   </div>
+
+  <script src="/js/recipesScript.js"></script>
 </body>
 </html>
