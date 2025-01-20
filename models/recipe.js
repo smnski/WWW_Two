@@ -5,6 +5,7 @@ const recipeSchema = new mongoose.Schema({
   calories: { type: Number, required: true },
   protein: { type: Number, required: true },
   carbohydrates: { type: Number, required: true },
+  fats: { type: Number, required: true }
 });
 
 module.exports = mongoose.model('Recipe', recipeSchema);
