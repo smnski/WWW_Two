@@ -35,6 +35,14 @@
     cursor: pointer;
 }
 
+.edit-btn {
+    background-color: transparent;
+    border: none;
+    color: #ffc107;
+    font-size: 20px;
+    cursor: pointer;
+}
+
 .card-container {
     position: relative;
 }
