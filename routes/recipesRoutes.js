@@ -14,4 +14,7 @@ router.get('/add', (req, res) => {
 // Handle form submission to add a new recipe
 router.post('/add', recipesController.addRecipe);
 
+// Route to delete a recipe
+router.delete('/delete/:id', recipesController.deleteRecipe);  // This route will delete a recipe
+
 module.exports = router;
