@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Goals</title>
+</head>
+<body>
+  <h1>Goals</h1>
+  <ul>
+    <% goals.forEach(goal => { %>
+      <li><%= goal.date.toDateString() %>: <%= goal.hitGoal ? 'Achieved' : 'Not Achieved' %></li>
+    <% }); %>
+  </ul>
+</body>
+</html>

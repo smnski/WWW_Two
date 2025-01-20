@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipes</title>
+</head>
+<body>
+  <h1>Recipes</h1>
+  <ul>
+    <% recipes.forEach(recipe => { %>
+      <li><%= recipe.name %>: <%= recipe.calories %> kcal, <%= recipe.protein %>g protein, <%= recipe.carbohydrates %>g carbs</li>
+    <% }); %>
+  </ul>
+  <form action="/recipes/add" method="POST">
+    <input type="text" name="name" placeholder="Name" required>
+    <input type="number" name="calories" placeholder="Calories" required>
+    <input type="number" name="protein" placeholder="Protein" required>
+    <input type="number" name="carbohydrates" placeholder="Carbohydrates" required>
+    <button type="submit">Add Recipe</button>
+  </form>
+</body>
+</html>

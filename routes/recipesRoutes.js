@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const recipesController = require('../controllers/recipesController');
 
-// Recipes page route
-router.get('/', recipesController.renderRecipes);
+router.get('/', recipesController.getRecipes);
+router.post('/add', recipesController.addRecipe);
 
 module.exports = router;
