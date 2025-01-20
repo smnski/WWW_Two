@@ -21,7 +21,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
-app.use('/', dashboardRoutes);
+app.use('/dashboard', dashboardRoutes);
 app.use('/recipes', recipesRoutes);
 app.use('/goals', goalsRoutes);
 
