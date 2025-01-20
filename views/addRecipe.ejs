@@ -1,0 +1,20 @@
+<!-- views/recipes/addRecipe.ejs -->
+<h1>Add New Recipe</h1>
+<form action="/recipes/add" method="POST">
+  <label for="name">Recipe Name:</label>
+  <input type="text" id="name" name="name" required>
+
+  <label for="calories">Calories:</label>
+  <input type="number" id="calories" name="calories" required>
+
+  <label for="protein">Protein:</label>
+  <input type="number" id="protein" name="protein" required>
+
+  <label for="carbs">Carbs:</label>
+  <input type="number" id="carbs" name="carbs" required>
+
+  <label for="fats">Fats:</label>
+  <input type="number" id="fats" name="fats" required>
+
+  <button type="submit">Add Recipe</button>
+</form>
