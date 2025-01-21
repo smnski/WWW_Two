@@ -47,4 +47,26 @@ const deleteRecipe = async (req, res) => {
   }
 };
 
-module.exports = { getRecipes, addRecipe, deleteRecipe };
+const updateRecipe = async (req, res) => {
+  try {
+    const { name, calories, protein, carbohydrates, fats } = req.body;
+    const recipeId = req.params.id;
+
+    // Update the recipe in the database
+    await Recipe.findByIdAndUpdate(recipeId, {
+      name,
+      calories,
+      protein,
+      carbohydrates,
+      fats,
+    });
+
+    // Redirect back to the recipes page
+    res.redirect('/recipes');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error updating recipe');
+  }
+};
+
+module.exports = { getRecipes, addRecipe, deleteRecipe, updateRecipe };

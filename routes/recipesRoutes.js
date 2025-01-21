@@ -15,6 +15,9 @@ router.get('/add', (req, res) => {
 router.post('/add', recipesController.addRecipe);
 
 // Route to delete a recipe
-router.delete('/delete/:id', recipesController.deleteRecipe);  // This route will delete a recipe
+router.delete('/delete/:id', recipesController.deleteRecipe);
+
+// Route to edit a recipe
+router.post('/edit/:id', recipesController.updateRecipe);
 
 module.exports = router;
