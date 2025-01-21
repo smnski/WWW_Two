@@ -14,10 +14,11 @@
     <h1 class="text-center mb-4">Recipes</h1>
 
     <div class="d-flex justify-content-center mb-4">
+      <!-- Add New Recipe Button -->
       <button class="btn btn-primary me-4" data-bs-toggle="modal" data-bs-target="#addRecipeModal">Add New Recipe</button>
-      <a href="/recipes/filter">
-        <button class="btn btn-secondary">Filter Recipes</button>
-      </a>
+
+      <!-- Corrected Filter Recipes Button -->
+      <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#filterRecipesModal">Filter Recipes</button>
     </div>
 
     <div class="row g-4">
@@ -62,6 +63,9 @@
 
   <!-- Include the add recipe modal -->
   <%- include('partial/addRecipe') %>
+
+  <!-- Include the filter recipes modal -->
+  <%- include('partial/filterRecipes') %>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/js/recipesScript.js"></script>

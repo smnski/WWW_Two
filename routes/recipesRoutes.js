@@ -20,4 +20,7 @@ router.delete('/delete/:id', recipesController.deleteRecipe);
 // Route to edit a recipe
 router.post('/edit/:id', recipesController.updateRecipe);
 
+// Filter recipes
+router.get('/filter', recipesController.filterRecipes);
+
 module.exports = router;
