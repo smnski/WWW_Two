@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const recipesRoutes = require('./routes/recipesRoutes');
-const goalsRoutes = require('./routes/goalsRoutes');
+const dayRoutes = require('./routes/dayRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
 
 const app = express();
@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/dashboard', dashboardRoutes)
 app.use('/recipes', recipesRoutes); 
-app.use('/goals', goalsRoutes);
+app.use('/days', dayRoutes);
 
 app.use((req, res) => {
   res.status(404).send('Page not found');

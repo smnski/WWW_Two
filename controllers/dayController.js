@@ -1,6 +1,6 @@
-const Goal = require('../models/Goal');
+const Day = require('../models/Day');
 
-const getGoals = async (req, res) => {
+const getDayGoals = async (req, res) => {
   try {
     const goals = await Goal.find();
     res.render('goals', { goals });
@@ -10,4 +10,4 @@ const getGoals = async (req, res) => {
   }
 };
 
-module.exports = { getGoals };
+module.exports = { getDayGoals };
