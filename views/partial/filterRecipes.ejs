@@ -1,49 +1,58 @@
 <!-- Filter Modal -->
 <div class="modal fade" id="filterRecipesModal" tabindex="-1" aria-labelledby="filterRecipesModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header d-flex justify-content-between align-items-center">
-          <h5 class="modal-title" id="filterRecipesModalLabel">Filter Recipes</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form action="/recipes/filter" method="GET">
-            <div class="mb-3">
-              <label for="minCalories" class="form-label">Min Calories</label>
-              <input type="number" class="form-control" id="minCalories" name="minCalories">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-between align-items-center">
+        <h5 class="modal-title" id="filterRecipesModalLabel">Filter Recipes</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/recipes/filter" method="GET">
+          <!-- Filter by Recipe Name -->
+          <div class="mb-3">
+            <label for="recipeName" class="form-label">Recipe Name</label>
+            <input type="text" class="form-control" id="recipeName" name="recipeName" placeholder="Enter part of the recipe name">
+          </div>
+
+          <!-- Inline Min-Max Fields for Calories -->
+          <div class="mb-3">
+            <label class="form-label">Calories</label>
+            <div class="d-flex gap-2">
+              <input type="number" class="form-control" id="minCalories" name="minCalories" placeholder="Min">
+              <input type="number" class="form-control" id="maxCalories" name="maxCalories" placeholder="Max">
             </div>
-            <div class="mb-3">
-              <label for="maxCalories" class="form-label">Max Calories</label>
-              <input type="number" class="form-control" id="maxCalories" name="maxCalories">
+          </div>
+
+          <!-- Inline Min-Max Fields for Protein -->
+          <div class="mb-3">
+            <label class="form-label">Protein</label>
+            <div class="d-flex gap-2">
+              <input type="number" class="form-control" id="minProtein" name="minProtein" placeholder="Min">
+              <input type="number" class="form-control" id="maxProtein" name="maxProtein" placeholder="Max">
             </div>
-            <div class="mb-3">
-              <label for="minProtein" class="form-label">Min Protein</label>
-              <input type="number" class="form-control" id="minProtein" name="minProtein">
+          </div>
+
+          <!-- Inline Min-Max Fields for Carbs -->
+          <div class="mb-3">
+            <label class="form-label">Carbs</label>
+            <div class="d-flex gap-2">
+              <input type="number" class="form-control" id="minCarbs" name="minCarbs" placeholder="Min">
+              <input type="number" class="form-control" id="maxCarbs" name="maxCarbs" placeholder="Max">
             </div>
-            <div class="mb-3">
-              <label for="maxProtein" class="form-label">Max Protein</label>
-              <input type="number" class="form-control" id="maxProtein" name="maxProtein">
+          </div>
+
+          <!-- Inline Min-Max Fields for Fats -->
+          <div class="mb-3">
+            <label class="form-label">Fats</label>
+            <div class="d-flex gap-2">
+              <input type="number" class="form-control" id="minFats" name="minFats" placeholder="Min">
+              <input type="number" class="form-control" id="maxFats" name="maxFats" placeholder="Max">
             </div>
-            <div class="mb-3">
-              <label for="minCarbs" class="form-label">Min Carbs</label>
-              <input type="number" class="form-control" id="minCarbs" name="minCarbs">
-            </div>
-            <div class="mb-3">
-              <label for="maxCarbs" class="form-label">Max Carbs</label>
-              <input type="number" class="form-control" id="maxCarbs" name="maxCarbs">
-            </div>
-            <div class="mb-3">
-              <label for="minFats" class="form-label">Min Fats</label>
-              <input type="number" class="form-control" id="minFats" name="minFats">
-            </div>
-            <div class="mb-3">
-              <label for="maxFats" class="form-label">Max Fats</label>
-              <input type="number" class="form-control" id="maxFats" name="maxFats">
-            </div>
-            <button type="submit" class="btn btn-primary">Apply Filters</button>
-          </form>
-        </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Apply Filters</button>
+        </form>
       </div>
     </div>
   </div>
-  
+</div>

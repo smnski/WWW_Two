@@ -72,6 +72,7 @@ const updateRecipe = async (req, res) => {
 const filterRecipes = async (req, res) => {
   try {
     const {
+      recipeName,
       minCalories,
       maxCalories,
       minProtein,
@@ -85,7 +86,12 @@ const filterRecipes = async (req, res) => {
     // Initialize filter object
     const filter = {};
 
-    // Dynamically add filter criteria
+    // Add Recipe Name Filter
+    if (recipeName) {
+      filter.name = { $regex: recipeName, $options: 'i' }; // Case-insensitive substring match
+    }
+
+    // Add Numeric Filters
     if (minCalories) filter.calories = { ...filter.calories, $gte: Number(minCalories) };
     if (maxCalories) filter.calories = { ...filter.calories, $lte: Number(maxCalories) };
     if (minProtein) filter.protein = { ...filter.protein, $gte: Number(minProtein) };
