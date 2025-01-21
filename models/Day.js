@@ -35,16 +35,9 @@ const daySchema = new mongoose.Schema({
   },
   meals: [
     {
-      recipe: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Recipe', // Reference to the Recipe model
-        required: true,
-      },
-      category: {
-        type: String,
-        enum: ['breakfast', 'lunch', 'dinner', 'supper', 'snack'], // Predefined categories
-        required: true,
-      },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Recipe',
+      required: true,
     },
   ],
 });

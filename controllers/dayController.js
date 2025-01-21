@@ -2,7 +2,7 @@ const Day = require('../models/Day');
 
 const getDayGoals = async (req, res) => {
   try {
-    const goals = await Goal.find();
+    const goals = await Day.find();
     res.render('goals', { goals });
   } catch (err) {
     console.error(err);
