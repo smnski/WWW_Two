@@ -1,5 +1,5 @@
 const Day = require('../models/Day');
-const Recipe = require('../models/Recipe'); // Ensure the Recipe model is imported
+const Recipe = require('../models/Recipe');
 
 const getDashboard = async (req, res) => {
   try {
@@ -7,23 +7,57 @@ const getDashboard = async (req, res) => {
     const startOfDay = new Date(today.setHours(0, 0, 0, 0));
     const endOfDay = new Date(today.setHours(23, 59, 59, 999));
 
-    // Find today's Day document
+    // Find today's Day document and populate meals
     const day = await Day.findOne({ date: { $gte: startOfDay, $lte: endOfDay } }).populate('meals');
 
-    // Check if the Day document exists
+    // If no Day document exists, render with an empty meal list
     if (!day) {
-      return res.render('dashboard', { meals: [] }); // If no document, pass an empty array
+      return res.render('dashboard', { meals: [] });
     }
 
-    // Populate the meals with recipe details
-    const meals = await Recipe.find({ _id: { $in: day.meals } });
-
-    // Render the dashboard and pass the meals data
-    res.render('dashboard', { meals });
+    // Render the dashboard with the populated meals
+    res.render('dashboard', { meals: day.meals });
   } catch (err) {
     console.error(err);
     res.status(500).send('Error loading dashboard');
   }
 };
 
-module.exports = { getDashboard };
+const getAllRecipes = async (req, res) => {
+  try {
+    const recipes = await Recipe.find({});
+    res.status(200).json(recipes);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to fetch recipes.' });
+  }
+};
+
+const addMealToToday = async (req, res) => {
+  try {
+    const { recipeId } = req.body;
+
+    const recipe = await Recipe.findById(recipeId);
+    if (!recipe) {
+      return res.status(404).json({ error: 'Recipe not found.' });
+    }
+
+    const today = new Date().toISOString().split('T')[0];
+    let day = await Day.findOne({ date: today });
+
+    if (!day) {
+      day = new Day({ date: today, meals: [] });
+    }
+
+    // Add the recipe to today's meals
+    day.meals.push(recipe._id);
+    await day.save();
+
+    res.status(200).json({ message: 'Recipe added to today!' });
+  } catch (error) {
+    console.error('Error adding meal to today:', error);
+    res.status(500).json({ error: 'Failed to add recipe.' });
+  }
+};
+
+module.exports = { getDashboard, addMealToToday, getAllRecipes };

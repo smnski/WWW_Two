@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 // Import the Recipe schema
 const Recipe = require('./Recipe'); // Adjust the path if necessary
+const Requirement = require('./Requirement')
 
 const daySchema = new mongoose.Schema({
   date: {
