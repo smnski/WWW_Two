@@ -9,13 +9,15 @@ html, body {
     padding: 20px;
 }
 
-.recipe-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.container-fluid {
   height: 100%;
-  border: 2px solid black;
-  padding: 20px;
 }
-  
+
+.recipe-container {
+  padding: 20px;
+  max-height: 400px; /* Fix height of the container */
+  height: 400px; /* Ensure the container doesn't exceed this height */
+  overflow-y: auto; /* Adds scrolling when content exceeds the fixed height */
+  border: 2px solid black; /* Visual border */
+  box-sizing: border-box; /* Ensures padding and borders are included in the height */
+}
