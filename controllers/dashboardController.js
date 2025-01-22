@@ -53,11 +53,22 @@ const addMealToToday = async (req, res) => {
     day.meals.push(recipe._id);
     await day.save();
 
-    res.status(200).json({ message: 'Recipe added to today!' });
+    // Return the full meal object (including all details) in the response
+    const updatedMeal = {
+      _id: recipe._id,
+      name: recipe.name,
+      calories: recipe.calories,
+      protein: recipe.protein,
+      carbohydrates: recipe.carbohydrates,
+      fats: recipe.fats
+    };
+
+    res.status(200).json(updatedMeal);
   } catch (error) {
     console.error('Error adding meal to today:', error);
     res.status(500).json({ error: 'Failed to add recipe.' });
   }
 };
+
 
 module.exports = { getDashboard, addMealToToday, getAllRecipes };
