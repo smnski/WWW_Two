@@ -76,3 +76,9 @@ html, body {
 .summary-text strong {
   color: #007bff;
 }
+
+/* Add this to your custom CSS or inside a <style> tag in the HTML */
+#recipeModal .modal-body {
+  max-height: 300px; /* You can adjust this value as needed */
+  overflow-y: auto;  /* Enables vertical scrolling when content exceeds the max height */
+}
