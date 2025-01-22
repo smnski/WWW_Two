@@ -62,7 +62,7 @@ html {
   }
   
   .text-start::before {
-    content: "🍏"; /* Add an apple emoji to represent the calorie counter logo */
+    content: "🍏";
     margin-right: 8px;
-    font-size: 1.8rem; /* Adjust the size of the emoji */
+    font-size: 1.8rem;
   }

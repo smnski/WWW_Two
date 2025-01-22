@@ -25,11 +25,11 @@ html, body {
 }
 
 .left-column {
-  background-color: #f8f9fa; /* Light background color */
-  border: 2px solid #495057; /* Darker border color */
+  background-color: #f8f9fa;
+  border: 2px solid #495057;
   border-radius: 8px;
   padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .recipe-button {
@@ -54,7 +54,7 @@ html, body {
 
 .summary-container {
   background-color: #f8f9fa;
-  border: 2px solid #495057; /* Darker border color */
+  border: 2px solid #495057;
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -77,8 +77,7 @@ html, body {
   color: #007bff;
 }
 
-/* Add this to your custom CSS or inside a <style> tag in the HTML */
 #recipeModal .modal-body {
-  max-height: 300px; /* You can adjust this value as needed */
-  overflow-y: auto;  /* Enables vertical scrolling when content exceeds the max height */
+  max-height: 300px;
+  overflow-y: auto;
 }

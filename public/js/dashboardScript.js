@@ -3,7 +3,7 @@ document.getElementById('addMealButton').addEventListener('click', async () => {
     const response = await fetch('/dashboard/recipes');
     const recipes = await response.json();
     const recipeList = document.getElementById('recipeList');
-    recipeList.innerHTML = ''; // Clear previous entries
+    recipeList.innerHTML = '';
 
     recipes.forEach(recipe => {
       const listItem = document.createElement('li');
@@ -25,7 +25,7 @@ document.getElementById('addMealButton').addEventListener('click', async () => {
           });
 
           if (addResponse.ok) {
-            const meal = await addResponse.json(); // Assuming the backend returns the added meal details
+            const meal = await addResponse.json();
 
             // Dynamically add the new meal to the correct container
             const mealCard = document.createElement('div');
@@ -73,7 +73,6 @@ document.getElementById('addMealButton').addEventListener('click', async () => {
             const modal = bootstrap.Modal.getInstance(document.getElementById('recipeModal'));
             modal.hide();
 
-            // Reload the page to reflect the changes
             location.reload();
           } else {
             alert('Failed to add recipe.');
@@ -98,9 +97,9 @@ function recalculateTotalCalories() {
   let totalCalories = 0;
 
   mealCards.forEach(card => {
-    const caloriesElement = card.querySelector('.card-text'); // Assuming calories text is within .card-text
+    const caloriesElement = card.querySelector('.card-text');
     if (caloriesElement) {
-      const calories = parseInt(caloriesElement.textContent.match(/\d+/)[0], 10); // Extracting the number
+      const calories = parseInt(caloriesElement.textContent.match(/\d+/)[0], 10);
       totalCalories += calories;
     }
   });
@@ -134,7 +133,6 @@ document.querySelectorAll('.remove-meal').forEach(button => {
   });
 });
 
-// Call recalculateTotalCalories on page load
 document.addEventListener('DOMContentLoaded', () => {
   recalculateTotalCalories();
 });

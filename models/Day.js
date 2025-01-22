@@ -1,18 +1,12 @@
 const mongoose = require('mongoose');
 const Requirement = require('./Requirement');
-const Recipe = require('./Recipe'); // If needed (some linting tools complain if unused)
-
-/**
- * daySchema:
- * - Each Day references multiple recipes (meals).
- * - We want to sum the macros from these recipes and store them in the day document.
- */
+const Recipe = require('./Recipe');
 
 const daySchema = new mongoose.Schema({
   date: {
     type: Date,
     required: true,
-    unique: true, // Ensures one entry per day
+    unique: true,
   },
   name: {
     type: String,
@@ -51,7 +45,6 @@ const daySchema = new mongoose.Schema({
   ],
 });
 
-// 1) Pre-save middleware to calculate day name based on date
 daySchema.pre('save', function (next) {
   if (this.date) {
     const daysOfWeek = [
@@ -68,8 +61,6 @@ daySchema.pre('save', function (next) {
   next();
 });
 
-// 2) Pre-save middleware to calculate consumed nutrients and determine if goal is met
-// 2) Pre-save middleware to calculate consumed nutrients and determine if goal is met
 daySchema.pre('save', async function (next) {
   try {
     const { meals } = this;

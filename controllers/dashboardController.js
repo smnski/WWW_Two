@@ -20,7 +20,7 @@ const getDashboard = async (req, res) => {
     if (!day) {
       return res.render('dashboard', {
         meals: [],
-        day: null,            // Pass null if no day found
+        day: null,
         requirements: requirements || null
       });
     }

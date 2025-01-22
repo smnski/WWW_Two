@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
-// Import the Recipe schema
-const Recipe = require('./Recipe'); // Adjust the path if necessary
+const Recipe = require('./Recipe');
 
 const requirementSchema = new mongoose.Schema({
   goalCalories: {

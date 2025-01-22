@@ -1,4 +1,3 @@
-// app.js
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -18,7 +17,7 @@ mongoose
   .catch((err) => console.error('MongoDB connection error:', err));
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json()); // Add this middleware to handle JSON data
+app.use(bodyParser.json());
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
