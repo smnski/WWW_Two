@@ -30,6 +30,7 @@
             <% meals.forEach(meal => { %>
               <div class="card card-container mb-3" id="meal-<%= meal._id %>">
                 <div class="card-body">
+                  <button class="btn btn-sm btn-danger remove-meal" data-id="<%= meal._id %>" style="position: absolute; top: 10px; right: 10px;">&times;</button>
                   <h5 class="card-title"><%= meal.name %></h5>
                   <p class="card-text">Calories: <%= meal.calories %></p>
                   <p class="card-text">Protein: <%= meal.protein %>g</p>
@@ -37,6 +38,7 @@
                   <p class="card-text">Fats: <%= meal.fats %>g</p>
                 </div>
               </div>
+              
             <% }); %>
           <% } else { %>
             <p class="text-center" id="noMealsMessage">No meals added for today!</p>
