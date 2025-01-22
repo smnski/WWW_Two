@@ -34,7 +34,7 @@ document.getElementById('addMealButton').addEventListener('click', async () => {
               mealCard.id = `meal-${meal._id}`;
               mealCard.innerHTML = `
                 <div class="card-body">
-                  <button class="btn btn-sm btn-danger remove-meal" data-id="${meal._id}" style="position: absolute; top: 10px; right: 10px;">&times;</button>
+                  <button class="btn btn-sm remove-meal" data-id="${meal._id}" style="position: absolute; top: 10px; right: 10px;">&times;</button>
                   <h5 class="card-title">${meal.name}</h5>
                   <p class="card-text">Calories: ${meal.calories}</p>
                   <p class="card-text">Protein: ${meal.protein}g</p>
