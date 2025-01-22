@@ -69,9 +69,9 @@ daySchema.pre('save', function (next) {
 });
 
 // 2) Pre-save middleware to calculate consumed nutrients and determine if goal is met
+// 2) Pre-save middleware to calculate consumed nutrients and determine if goal is met
 daySchema.pre('save', async function (next) {
   try {
-    // 'this.meals' is an array of ObjectIds referencing 'Recipe'
     const { meals } = this;
 
     let totalCalories = 0;
@@ -84,12 +84,15 @@ daySchema.pre('save', async function (next) {
       _id: { $in: meals },
     });
 
-    // Sum the macros
-    populatedMeals.forEach((recipe) => {
-      totalCalories += recipe.calories;
-      totalProtein += recipe.protein;
-      totalFats += recipe.fats;
-      totalCarbohydrates += recipe.carbohydrates;
+    // Count the occurrences of each meal in the 'meals' array
+    meals.forEach(mealId => {
+      const meal = populatedMeals.find(recipe => recipe._id.toString() === mealId.toString());
+      if (meal) {
+        totalCalories += meal.calories;
+        totalProtein += meal.protein;
+        totalFats += meal.fats;
+        totalCarbohydrates += meal.carbohydrates;
+      }
     });
 
     // Assign sums to the Day fields
@@ -118,5 +121,6 @@ daySchema.pre('save', async function (next) {
     next(err);
   }
 });
+
 
 module.exports = mongoose.models.Day || mongoose.model('Day', daySchema);
