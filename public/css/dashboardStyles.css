@@ -47,3 +47,34 @@ html, body {
   margin-right: 8px;
   font-size: 1.8rem; /* Adjust the size of the emoji */
 }
+
+#weeklyGraph {
+  display: flex;
+  align-items: flex-end; /* so bars start from the bottom */
+  height: 200px; /* adjust total height as needed */
+  border-left: 1px solid #333;
+  border-bottom: 1px solid #333;
+  padding: 10px;
+}
+
+/* Each day's bar */
+.bar {
+  flex: 1;
+  margin: 0 5px;
+  background-color: #007bff;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.bar:hover {
+  background-color: #0056b3;
+}
+
+/* Day label */
+.bar-label {
+  margin-top: 5px;
+  font-size: 0.9rem;
+  text-align: center;
+}
