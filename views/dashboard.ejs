@@ -39,7 +39,7 @@
               </div>
             <% }); %>
           <% } else { %>
-            <p class="text-center">No meals added for today!</p>
+            <p class="text-center" id="noMealsMessage">No meals added for today!</p>
           <% } %>
         </div>
       </div>
@@ -116,8 +116,32 @@
               });
 
               if (addResponse.ok) {
-                alert('Recipe added to today!');
-                document.getElementById('recipeModal').click();
+                const meal = await addResponse.json();  // Assuming the backend returns the added meal details
+
+                // Dynamically add the new meal to the meal list
+                const mealCard = document.createElement('div');
+                mealCard.classList.add('card', 'card-container', 'mb-3');
+                mealCard.id = `meal-${meal._id}`;
+                mealCard.innerHTML = `
+                  <div class="card-body">
+                    <h5 class="card-title">${meal.name}</h5>
+                    <p class="card-text">Calories: ${meal.calories}</p>
+                    <p class="card-text">Protein: ${meal.protein}g</p>
+                    <p class="card-text">Carbohydrates: ${meal.carbohydrates}g</p>
+                    <p class="card-text">Fats: ${meal.fats}g</p>
+                  </div>
+                `;
+                document.querySelector('.button-container.flex-grow-1').appendChild(mealCard);
+
+                // Hide the "No meals added" message if meals exist now
+                const noMealsMessage = document.getElementById('noMealsMessage');
+                if (noMealsMessage) {
+                  noMealsMessage.style.display = 'none';
+                }
+
+                // Close the modal correctly
+                const modal = bootstrap.Modal.getInstance(document.getElementById('recipeModal'));
+                modal.hide();
               } else {
                 alert('Failed to add recipe.');
               }
@@ -127,7 +151,9 @@
           });
         });
 
-        new bootstrap.Modal(document.getElementById('recipeModal')).show();
+        // Show the modal
+        const modal = new bootstrap.Modal(document.getElementById('recipeModal'));
+        modal.show();
       } catch (error) {
         console.error('Error fetching recipes:', error);
       }
