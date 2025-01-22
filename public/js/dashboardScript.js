@@ -16,50 +16,82 @@ document.getElementById('addMealButton').addEventListener('click', async () => {
       });
 
       document.querySelectorAll('.add-recipe').forEach(button => {
-          button.addEventListener('click', async () => {
-              const recipeId = button.getAttribute('data-id');
-              try {
-                  const addResponse = await fetch('/dashboard/add-meal', {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify({ recipeId })
+        button.addEventListener('click', async () => {
+          const recipeId = button.getAttribute('data-id');
+          try {
+            const addResponse = await fetch('/dashboard/add-meal', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ recipeId })
+            });
+      
+            if (addResponse.ok) {
+              const meal = await addResponse.json(); // Assuming the backend returns the added meal details
+      
+              // Dynamically add the new meal to the correct container
+              const mealCard = document.createElement('div');
+              mealCard.classList.add('card', 'card-container', 'mb-3');
+              mealCard.id = `meal-${meal._id}`;
+              mealCard.innerHTML = `
+                <div class="card-body">
+                  <button class="btn btn-sm btn-danger remove-meal" data-id="${meal._id}" style="position: absolute; top: 10px; right: 10px;">&times;</button>
+                  <h5 class="card-title">${meal.name}</h5>
+                  <p class="card-text">Calories: ${meal.calories}</p>
+                  <p class="card-text">Protein: ${meal.protein}g</p>
+                  <p class="card-text">Carbohydrates: ${meal.carbohydrates}g</p>
+                  <p class="card-text">Fats: ${meal.fats}g</p>
+                </div>
+              `;
+              document.querySelector('.recipe-container').appendChild(mealCard);
+      
+              // Attach the remove button functionality to the newly added card
+              const removeButton = mealCard.querySelector('.remove-meal');
+              removeButton.addEventListener('click', async () => {
+                try {
+                  const response = await fetch('/dashboard/remove-meal', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ mealId: meal._id })
                   });
-
-                  if (addResponse.ok) {
-                      const meal = await addResponse.json(); // Assuming the backend returns the added meal details
-
-                      // Dynamically add the new meal to the correct container
-                      const mealCard = document.createElement('div');
-                      mealCard.classList.add('card', 'card-container', 'mb-3');
-                      mealCard.id = `meal-${meal._id}`;
-                      mealCard.innerHTML = `
-                          <div class="card-body">
-                              <h5 class="card-title">${meal.name}</h5>
-                              <p class="card-text">Calories: ${meal.calories}</p>
-                              <p class="card-text">Protein: ${meal.protein}g</p>
-                              <p class="card-text">Carbohydrates: ${meal.carbohydrates}g</p>
-                              <p class="card-text">Fats: ${meal.fats}g</p>
-                          </div>
-                      `;
-                      document.querySelector('.recipe-container').appendChild(mealCard);
-
-                      // Hide the "No meals added" message if meals exist now
+      
+                  if (response.ok) {
+                    // Remove the meal card from the DOM
+                    mealCard.remove();
+      
+                    // If there are no meals left, show the "No meals added" message
+                    const mealContainer = document.querySelector('.recipe-container');
+                    if (mealContainer.children.length === 0) {
                       const noMealsMessage = document.getElementById('noMealsMessage');
                       if (noMealsMessage) {
-                          noMealsMessage.style.display = 'none';
+                        noMealsMessage.style.display = 'block';
                       }
-
-                      // Close the modal correctly
-                      const modal = bootstrap.Modal.getInstance(document.getElementById('recipeModal'));
-                      modal.hide();
+                    }
                   } else {
-                      alert('Failed to add recipe.');
+                    alert('Failed to remove meal.');
                   }
-              } catch (error) {
-                  console.error('Error:', error);
+                } catch (error) {
+                  console.error('Error removing meal:', error);
+                }
+              });
+      
+              // Hide the "No meals added" message if meals exist now
+              const noMealsMessage = document.getElementById('noMealsMessage');
+              if (noMealsMessage) {
+                noMealsMessage.style.display = 'none';
               }
-          });
+      
+              // Close the modal correctly
+              const modal = bootstrap.Modal.getInstance(document.getElementById('recipeModal'));
+              modal.hide();
+            } else {
+              alert('Failed to add recipe.');
+            }
+          } catch (error) {
+            console.error('Error:', error);
+          }
+        });
       });
+      
 
       // Show the modal
       const modal = new bootstrap.Modal(document.getElementById('recipeModal'));
