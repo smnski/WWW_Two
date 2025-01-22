@@ -1,5 +1,6 @@
 const Day = require('../models/Day');
 const Recipe = require('../models/Recipe');
+const Requirement = require('../models/Requirement'); // <-- ADDED
 
 const getDashboard = async (req, res) => {
   try {
@@ -7,16 +8,29 @@ const getDashboard = async (req, res) => {
     const startOfDay = new Date(today.setHours(0, 0, 0, 0));
     const endOfDay = new Date(today.setHours(23, 59, 59, 999));
 
-    // Find today's Day document and populate meals
-    const day = await Day.findOne({ date: { $gte: startOfDay, $lte: endOfDay } }).populate('meals');
+    // Find or create today's Day
+    let day = await Day.findOne({
+      date: { $gte: startOfDay, $lte: endOfDay }
+    }).populate('meals');
+
+    // Get the requirement document (assuming you only have one)
+    const requirements = await Requirement.findOne();
 
     // If no Day document exists, render with an empty meal list
     if (!day) {
-      return res.render('dashboard', { meals: [] });
+      return res.render('dashboard', {
+        meals: [],
+        day: null,            // Pass null if no day found
+        requirements: requirements || null
+      });
     }
 
-    // Render the dashboard with the populated meals
-    res.render('dashboard', { meals: day.meals });
+    // Render the dashboard with the populated meals, day data, and daily requirements
+    res.render('dashboard', {
+      meals: day.meals,
+      day,                    // Pass the entire day document
+      requirements: requirements || null
+    });
   } catch (err) {
     console.error(err);
     res.status(500).send('Error loading dashboard');
@@ -36,7 +50,6 @@ const getAllRecipes = async (req, res) => {
 const addMealToToday = async (req, res) => {
   try {
     const { recipeId } = req.body;
-
     const recipe = await Recipe.findById(recipeId);
     if (!recipe) {
       return res.status(404).json({ error: 'Recipe not found.' });
@@ -97,4 +110,9 @@ const removeMealFromToday = async (req, res) => {
   }
 };
 
-module.exports = { getDashboard, addMealToToday, getAllRecipes, removeMealFromToday };
+module.exports = { 
+  getDashboard, 
+  addMealToToday, 
+  getAllRecipes, 
+  removeMealFromToday 
+};

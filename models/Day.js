@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
+const Requirement = require('./Requirement');
+const Recipe = require('./Recipe'); // If needed (some linting tools complain if unused)
 
-// Import the Recipe schema
-const Recipe = require('./Recipe'); // Adjust the path if necessary
-const Requirement = require('./Requirement')
+/**
+ * daySchema:
+ * - Each Day references multiple recipes (meals).
+ * - We want to sum the macros from these recipes and store them in the day document.
+ */
 
 const daySchema = new mongoose.Schema({
   date: {
@@ -47,54 +51,72 @@ const daySchema = new mongoose.Schema({
   ],
 });
 
-// Middleware to calculate the day of the week based on the date
+// 1) Pre-save middleware to calculate day name based on date
 daySchema.pre('save', function (next) {
   if (this.date) {
-    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const daysOfWeek = [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+    ];
     this.name = daysOfWeek[this.date.getDay()];
   }
   next();
 });
 
-// Pre-save middleware to calculate consumed nutrients and goalMet
+// 2) Pre-save middleware to calculate consumed nutrients and determine if goal is met
 daySchema.pre('save', async function (next) {
-  const { meals } = this;
+  try {
+    // 'this.meals' is an array of ObjectIds referencing 'Recipe'
+    const { meals } = this;
 
-  let totalCalories = 0;
-  let totalProtein = 0;
-  let totalFats = 0;
-  let totalCarbohydrates = 0;
+    let totalCalories = 0;
+    let totalProtein = 0;
+    let totalFats = 0;
+    let totalCarbohydrates = 0;
 
-  const populatedMeals = await mongoose.model('Recipe').find({
-    _id: { $in: meals.map((meal) => meal.recipe) },
-  });
+    // Fetch all Recipe documents whose _id is in the meals array
+    const populatedMeals = await mongoose.model('Recipe').find({
+      _id: { $in: meals },
+    });
 
-  populatedMeals.forEach((recipe) => {
-    totalCalories += recipe.calories;
-    totalProtein += recipe.protein;
-    totalFats += recipe.fats;
-    totalCarbohydrates += recipe.carbohydrates;
-  });
+    // Sum the macros
+    populatedMeals.forEach((recipe) => {
+      totalCalories += recipe.calories;
+      totalProtein += recipe.protein;
+      totalFats += recipe.fats;
+      totalCarbohydrates += recipe.carbohydrates;
+    });
 
-  this.consumedCalories = totalCalories;
-  this.consumedProtein = totalProtein;
-  this.consumedFats = totalFats;
-  this.consumedCarbohydrates = totalCarbohydrates;
+    // Assign sums to the Day fields
+    this.consumedCalories = totalCalories;
+    this.consumedProtein = totalProtein;
+    this.consumedFats = totalFats;
+    this.consumedCarbohydrates = totalCarbohydrates;
 
-  const Requirement = mongoose.model('Requirement');
-  const requirements = await Requirement.findOne();
+    // Check daily requirements from the single Requirement doc
+    const requirements = await Requirement.findOne();
+    if (!requirements) {
+      // If no Requirement doc is set, let the sums stand but do not set goalMet
+      this.goalMet = false;
+      return next();
+    }
 
-  if (!requirements) {
-    return next(new Error('No requirement document found! Please add requirements.'));
+    this.goalMet =
+      this.consumedCalories >= requirements.goalCalories &&
+      this.consumedProtein >= requirements.goalProtein &&
+      this.consumedFats >= requirements.goalFats &&
+      this.consumedCarbohydrates >= requirements.goalCarbohydrates;
+
+    next();
+  } catch (err) {
+    console.error('Error in Day pre-save:', err);
+    next(err);
   }
-
-  this.goalMet =
-    this.consumedCalories >= requirements.goalCalories &&
-    this.consumedProtein >= requirements.goalProtein &&
-    this.consumedFats >= requirements.goalFats &&
-    this.consumedCarbohydrates >= requirements.goalCarbohydrates;
-
-  next();
 });
 
 module.exports = mongoose.models.Day || mongoose.model('Day', daySchema);

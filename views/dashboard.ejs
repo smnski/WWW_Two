@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Liczenie Kalorii</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/dashboardStyles.css" rel="stylesheet">
@@ -21,6 +21,7 @@
     </div>
     
     <div class="row flex-grow-1">
+      <!-- Left Column: Meals List -->
       <div class="left-column col-5 d-flex flex-column mb-1">
         <div class="recipe-button text-center mb-3">
           <button class="btn btn-primary" id="addMealButton">Add Recipe to Today</button>
@@ -38,7 +39,6 @@
                   <p class="card-text">Fats: <%= meal.fats %>g</p>
                 </div>
               </div>
-              
             <% }); %>
           <% } else { %>
             <p class="text-center" id="noMealsMessage">No meals added for today!</p>
@@ -46,16 +46,39 @@
         </div>
       </div>
       
+      <!-- Right Column: Summary Rows -->
       <div class="col-7 d-flex flex-column">
         <div class="row flex-grow-1 mb-1">
+          <!-- Calorie Summary -->
           <div class="col d-flex">
-            <div class="button-container flex-grow-1">
-              ccc
+            <div class="button-container flex-grow-1 text-center">
+              <h4>Calorie Summary</h4>
+              <% if (day) { %>
+                <p><strong>Consumed:</strong> <%= day.consumedCalories %> 
+                  / <%= requirements ? requirements.goalCalories : 'N/A' %> kcal
+                </p>
+              <% } else { %>
+                <p>No data for today</p>
+              <% } %>
             </div>
           </div>
+          <!-- Macronutrient Summary -->
           <div class="col d-flex">
-            <div class="button-container flex-grow-1">
-              ddd
+            <div class="button-container flex-grow-1 text-center">
+              <h4>Macronutrient Summary</h4>
+              <% if (day) { %>
+                <p><strong>Protein:</strong> <%= day.consumedProtein %> 
+                  / <%= requirements ? requirements.goalProtein : 'N/A' %> g
+                </p>
+                <p><strong>Carbohydrates:</strong> <%= day.consumedCarbohydrates %> 
+                  / <%= requirements ? requirements.goalCarbohydrates : 'N/A' %> g
+                </p>
+                <p><strong>Fats:</strong> <%= day.consumedFats %>
+                  / <%= requirements ? requirements.goalFats : 'N/A' %> g
+                </p>
+              <% } else { %>
+                <p>No data for today</p>
+              <% } %>
             </div>
           </div>
         </div>
@@ -63,6 +86,7 @@
     </div>
   </div>
 
+  <!-- Modal for selecting a recipe to add -->
   <div class="modal fade" id="recipeModal" tabindex="-1" aria-labelledby="recipeModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -78,6 +102,7 @@
     </div>
   </div>
 
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/js/dashboardScript.js"></script>
 </body>
