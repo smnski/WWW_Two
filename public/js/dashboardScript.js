@@ -8,10 +8,9 @@ document.getElementById('addMealButton').addEventListener('click', async () => {
     recipes.forEach(recipe => {
       const listItem = document.createElement('li');
       listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
-      listItem.innerHTML = `
-        <span>${recipe.name} (Calories: ${recipe.calories})</span>
-        <button class="btn btn-sm btn-primary add-recipe" data-id="${recipe._id}">Add</button>
-      `;
+      listItem.innerHTML = 
+        `<span>${recipe.name} (Calories: ${recipe.calories})</span>
+        <button class="btn btn-sm btn-primary add-recipe" data-id="${recipe._id}">Add</button>`;
       recipeList.appendChild(listItem);
     });
 
@@ -32,16 +31,15 @@ document.getElementById('addMealButton').addEventListener('click', async () => {
             const mealCard = document.createElement('div');
             mealCard.classList.add('card', 'card-container', 'mb-3');
             mealCard.id = `meal-${meal._id}`;
-            mealCard.innerHTML = `
-              <div class="card-body">
+            mealCard.innerHTML = 
+              `<div class="card-body">
                 <button class="btn btn-sm remove-meal" data-id="${meal._id}" style="position: absolute; top: 10px; right: 10px;">&times;</button>
                 <h5 class="card-title">${meal.name}</h5>
                 <p class="card-text">Calories: ${meal.calories}</p>
                 <p class="card-text">Protein: ${meal.protein}g</p>
                 <p class="card-text">Carbohydrates: ${meal.carbohydrates}g</p>
                 <p class="card-text">Fats: ${meal.fats}g</p>
-              </div>
-            `;
+              </div>`;
             document.querySelector('.recipe-container').appendChild(mealCard);
 
             // Attach the remove button functionality to the newly added card
@@ -58,14 +56,8 @@ document.getElementById('addMealButton').addEventListener('click', async () => {
                   // Remove the meal card from the DOM
                   mealCard.remove();
 
-                  // If there are no meals left, show the "No meals added" message
-                  const mealContainer = document.querySelector('.recipe-container');
-                  if (mealContainer.children.length === 0) {
-                    const noMealsMessage = document.getElementById('noMealsMessage');
-                    if (noMealsMessage) {
-                      noMealsMessage.style.display = 'block';
-                    }
-                  }
+                  // Recalculate the total calories
+                  recalculateTotalCalories();
                 } else {
                   alert('Failed to remove meal.');
                 }
@@ -74,11 +66,8 @@ document.getElementById('addMealButton').addEventListener('click', async () => {
               }
             });
 
-            // Hide the "No meals added" message if meals exist now
-            const noMealsMessage = document.getElementById('noMealsMessage');
-            if (noMealsMessage) {
-              noMealsMessage.style.display = 'none';
-            }
+            // Recalculate total calories
+            recalculateTotalCalories();
 
             // Close the modal correctly
             const modal = bootstrap.Modal.getInstance(document.getElementById('recipeModal'));
@@ -103,6 +92,26 @@ document.getElementById('addMealButton').addEventListener('click', async () => {
   }
 });
 
+// Recalculate the total calories based on current meal data
+function recalculateTotalCalories() {
+  const mealCards = document.querySelectorAll('.card-container');
+  let totalCalories = 0;
+
+  mealCards.forEach(card => {
+    const caloriesElement = card.querySelector('.card-text'); // Assuming calories text is within .card-text
+    if (caloriesElement) {
+      const calories = parseInt(caloriesElement.textContent.match(/\d+/)[0], 10); // Extracting the number
+      totalCalories += calories;
+    }
+  });
+
+  // Update the total calories display on the dashboard
+  const calorieSummary = document.querySelector('.summary-text');
+  if (calorieSummary) {
+    calorieSummary.innerHTML = `<strong>Consumed:</strong> ${totalCalories} kcal`;
+  }
+}
+
 document.querySelectorAll('.remove-meal').forEach(button => {
   button.addEventListener('click', async (event) => {
     const mealId = event.target.getAttribute('data-id');
@@ -123,4 +132,9 @@ document.querySelectorAll('.remove-meal').forEach(button => {
       console.error('Error removing meal:', error);
     }
   });
+});
+
+// Call recalculateTotalCalories on page load
+document.addEventListener('DOMContentLoaded', () => {
+  recalculateTotalCalories();
 });
