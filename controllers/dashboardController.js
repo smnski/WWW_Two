@@ -82,16 +82,19 @@ const removeMealFromToday = async (req, res) => {
       return res.status(404).json({ error: 'No meals found for today.' });
     }
 
-    // Remove the meal from the meals array
-    day.meals = day.meals.filter(meal => meal.toString() !== mealId);
-    await day.save();
-
-    res.status(200).json({ message: 'Meal removed successfully.' });
+    // Remove only one occurrence of the mealId
+    const index = day.meals.findIndex(meal => meal.toString() === mealId);
+    if (index !== -1) {
+      day.meals.splice(index, 1);
+      await day.save();
+      return res.status(200).json({ message: 'Meal removed successfully.' });
+    } else {
+      return res.status(404).json({ error: 'Meal not found.' });
+    }
   } catch (error) {
     console.error('Error removing meal:', error);
     res.status(500).json({ error: 'Failed to remove meal.' });
   }
 };
-
 
 module.exports = { getDashboard, addMealToToday, getAllRecipes, removeMealFromToday };
