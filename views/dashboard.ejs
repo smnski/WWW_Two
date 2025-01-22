@@ -51,33 +51,38 @@
         <div class="row flex-grow-1 mb-1">
           <!-- Calorie Summary -->
           <div class="col d-flex">
-            <div class="button-container flex-grow-1 text-center">
-              <h4>Calorie Summary</h4>
+            <div class="summary-container flex-grow-1 text-center">
+              <h4 class="summary-title">Calorie Summary</h4>
               <% if (day) { %>
-                <p><strong>Consumed:</strong> <%= day.consumedCalories %> 
+                <p class="summary-text">
+                  <strong>Consumed:</strong> <%= day.consumedCalories %> 
                   / <%= requirements ? requirements.goalCalories : 'N/A' %> kcal
                 </p>
               <% } else { %>
-                <p>No data for today</p>
+                <p class="summary-text">No data for today</p>
               <% } %>
             </div>
           </div>
+          
           <!-- Macronutrient Summary -->
           <div class="col d-flex">
-            <div class="button-container flex-grow-1 text-center">
-              <h4>Macronutrient Summary</h4>
+            <div class="summary-container flex-grow-1 text-center">
+              <h4 class="summary-title">Macronutrient Summary</h4>
               <% if (day) { %>
-                <p><strong>Protein:</strong> <%= day.consumedProtein %> 
+                <p class="summary-text">
+                  <strong>Protein:</strong> <%= day.consumedProtein %> 
                   / <%= requirements ? requirements.goalProtein : 'N/A' %> g
                 </p>
-                <p><strong>Carbohydrates:</strong> <%= day.consumedCarbohydrates %> 
+                <p class="summary-text">
+                  <strong>Carbohydrates:</strong> <%= day.consumedCarbohydrates %> 
                   / <%= requirements ? requirements.goalCarbohydrates : 'N/A' %> g
                 </p>
-                <p><strong>Fats:</strong> <%= day.consumedFats %>
+                <p class="summary-text">
+                  <strong>Fats:</strong> <%= day.consumedFats %> 
                   / <%= requirements ? requirements.goalFats : 'N/A' %> g
                 </p>
               <% } else { %>
-                <p>No data for today</p>
+                <p class="summary-text">No data for today</p>
               <% } %>
             </div>
           </div>
