@@ -20,12 +20,11 @@
     
     <div class="row flex-grow-1">
       <!-- Left Column: meals div -->
-      <div class="col-5 d-flex mb-1">
+      <div class="left-column col-5 d-flex flex-column mb-1">
+        <div class="recipe-button text-center mb-3">
+          <button class="btn btn-primary" id="addMealButton">Add Recipe to Today</button>
+        </div>
         <div class="recipe-container flex-grow-1 overflow-auto" style="max-height: 100%;">
-          <div class="text-center mb-3">
-            <button class="btn btn-primary" id="addMealButton">Add Recipe to Today</button>
-          </div>
-          
           <% if (meals.length > 0) { %>
             <% meals.forEach(meal => { %>
               <div class="card card-container mb-3" id="meal-<%= meal._id %>">

@@ -14,9 +14,16 @@ html, body {
 }
 
 .recipe-container {
-  padding: 20px;
-  height: calc(100vh - 80px); /* Subtract the height of the top bar (adjust as needed) */
+  padding: 10px;
+  height: calc(100vh - 150px); /* Subtract the height of the top bar (adjust as needed) */
   overflow-y: auto; /* Adds scrolling when content exceeds the fixed height */
-  border: 2px solid black; /* Visual border */
   box-sizing: border-box; /* Ensures padding and borders are included in the height */
+}
+
+.left-column {
+  border: 2px solid black; /* Visual border */
+}
+
+.recipe-button {
+  padding-top: 10px;
 }
