@@ -62,3 +62,11 @@
     margin-right: 8px;
     font-size: 1.8rem; /* Adjust the size of the emoji */
   }
+
+  body {
+    overflow-y: scroll; /* Always show scrollbar */
+}
+
+.container {
+    padding-right: 0; /* Remove any additional right padding */
+}

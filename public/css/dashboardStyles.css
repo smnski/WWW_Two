@@ -15,7 +15,7 @@ html, body {
 
 .recipe-container {
   padding: 10px;
-  height: calc(100vh - 150px); /* Subtract the height of the top bar (adjust as needed) */
+  height: calc(100vh - 155px); /* Subtract the height of the top bar (adjust as needed) */
   overflow-y: auto; /* Adds scrolling when content exceeds the fixed height */
   box-sizing: border-box; /* Ensures padding and borders are included in the height */
 }
