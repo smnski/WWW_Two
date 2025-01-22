@@ -27,3 +27,19 @@ html, body {
 .recipe-button {
   padding-top: 10px;
 }
+
+.text-start {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #007bff;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+}
+
+.text-start::before {
+  content: "🍏"; /* Add an apple emoji to represent the calorie counter logo */
+  margin-right: 8px;
+  font-size: 1.8rem; /* Adjust the size of the emoji */
+}
