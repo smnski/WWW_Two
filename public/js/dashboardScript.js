@@ -68,3 +68,36 @@ document.getElementById('addMealButton').addEventListener('click', async () => {
       console.error('Error fetching recipes:', error);
   }
 });
+
+document.querySelectorAll('.remove-meal').forEach(button => {
+    button.addEventListener('click', async (event) => {
+      const mealId = event.target.getAttribute('data-id');
+      try {
+        const response = await fetch('/dashboard/remove-meal', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mealId })
+        });
+  
+        if (response.ok) {
+          // Remove the meal card from the DOM
+          const mealCard = document.getElementById(`meal-${mealId}`);
+          mealCard.remove();
+  
+          // If there are no meals left, show the "No meals added" message
+          const mealContainer = document.querySelector('.recipe-container');
+          if (mealContainer.children.length === 0) {
+            const noMealsMessage = document.getElementById('noMealsMessage');
+            if (noMealsMessage) {
+              noMealsMessage.style.display = 'block';
+            }
+          }
+        } else {
+          alert('Failed to remove meal.');
+        }
+      } catch (error) {
+        console.error('Error removing meal:', error);
+      }
+    });
+  });
+  

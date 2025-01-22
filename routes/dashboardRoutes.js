@@ -11,4 +11,6 @@ router.get('/recipes', dashboardController.getAllRecipes);
 // New route to add a recipe to the current day
 router.post('/add-meal', dashboardController.addMealToToday);
 
+router.post('/remove-meal', dashboardController.removeMealFromToday);
+
 module.exports = router;
